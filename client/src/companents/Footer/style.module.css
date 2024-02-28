@@ -1,0 +1,48 @@
+.wrapper {
+   
+    width: 1220px;
+    margin: 2% auto;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--primaty-grey-dark, #757575);
+    font: 600 14px Montserrat;
+    margin-bottom: 20px;
+}
+
+.nav .transition {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+.line {
+    background-image: url(./assets/Vector\ 1.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 5px;
+}
+
+.end {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.end .img {
+    background-image: url(../Footer/assets/Frame\ 6.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 150px;
+    height: 24px;
+}
+
+.end .signature {
+    color: var(--primaty-grey-dark, #757575);
+    font: 600 12px Montserrat;
+}
