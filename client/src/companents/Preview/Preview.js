@@ -14,49 +14,49 @@ function Preview() {
 
 
 
+    const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, "");
 
+    const hash = md5(`Valantis_${stamp}`);
+
+    const getItemsList = async () => {
+        try {
+            const objectToSerwerAuth = {
+                "action": "get_items",
+                "params": { "ids": ['1789ecf3-f81c-4f49-ada2-83804dcc74b0', '2b7c7643-6852-4562-8a72-7666c72b3518', '9f2722a8-dac6-4f71-b877-1731d30ae6db'] }
+                // "params": {"offset": 10, "limit": 3}
+            };
+            const response = await fetch('http://api.valantis.store:40000', {
+                method: 'POST',
+                body: JSON.stringify(objectToSerwerAuth),
+                headers: {
+                    'Content-Type': 'application/json',
+                    "X-Auth": hash
+                }
+            });
+            const res = (await response.json()).result;
+            console.log(res);
+
+            setListItems(res);
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     useEffect(() => {
-        const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, "");
 
-        const hash = md5(`Valantis_${stamp}`);
-        const getItemsList = async () => {
-            try {
-                const objectToSerwerAuth = {
-                    "action": "get_items",
-                    "params": { "ids": ["1789ecf3-f81c-4f49-ada2-83804dcc74b0"] }
-                    // "params": {"offset": 10, "limit": 3}
-                };
-                const response = await fetch('http://api.valantis.store:40000', {
-                    method: 'POST',
-                    body: JSON.stringify(objectToSerwerAuth),
-                    headers: {
-                        'Content-Type': 'application/json',
-                        "X-Auth": hash
-
-                    }
-                });
-
-                console.log(response.status);
-                console.log(await response.json());
-                setListItems(await response.json());
-
-            } catch (err) {
-                console.log(err);
-            }
-        };
         getItemsList();
+
     }, []);
 
 
 
-    const res = listItems.map(elem => <div>
+    const res = listItems.map((elem, i) => <div>
         <div className={style.wrapper}>
             <div className={style.info}>
                 <h1 className={style.item}>{elem.product}</h1>
-                <p className={style.text}>{elem.id}</p>
-                <p className={style.text}>{elem.brand}</p>
-                <p className={style.text}>{elem.price}</p>
+                <p className={style.text}>id:  {elem.id}</p>
+                <p className={style.text}>brand: {elem.brand}</p>
+                <p className={style.text}>price: {elem.price}</p>
             </div>
         </div>
     </div>)
