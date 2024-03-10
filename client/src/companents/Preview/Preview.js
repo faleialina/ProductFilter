@@ -3,6 +3,7 @@ import Pagination from '@mui/material/Pagination';
 import { useEffect, useState } from 'react';
 import md5 from "md5";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import Filter from '../Filter/Filter';
 
 function Preview() {
 
@@ -38,11 +39,36 @@ function Preview() {
             console.log(err);
         }
     };
-    const getItemsList = async () => {
+
+    const filteredList = async (req) => {
+        try {
+            if (req.select === 'price') req.value = parseInt(req.value)
+            const objectToSerwerAuth = {
+                "action": "filter",
+                "params": { [req.select]: req.value }
+            };
+            const response = await fetch('http://api.valantis.store:40000', {
+                method: 'POST',
+                body: JSON.stringify(objectToSerwerAuth),
+                headers: {
+                    'Content-Type': 'application/json',
+                    "X-Auth": hash
+                }
+            });
+            const res = (await response.json()).result;
+            console.log(res);
+
+
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const getItemsList = async (req) => {
         try {
             const objectToSerwerAuth = {
                 "action": "get_items",
-                "params": { "ids": await obtainingAllId() }
+                "params": { "ids": req === undefined ? await obtainingAllId() : await filteredList(req) }
             };
             const response = await fetch('http://api.valantis.store:40000', {
                 method: 'POST',
@@ -61,6 +87,9 @@ function Preview() {
         }
     };
 
+
+
+
     useEffect(() => {
 
         getItemsList();
@@ -78,6 +107,7 @@ function Preview() {
                 <div className={style.img}></div>
                 <h1>Product</h1>
             </div>
+            <Filter getItemsList={getItemsList} />
             <div className={style.header}>
                 <TableContainer >
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">

@@ -1,0 +1,12 @@
+.header {
+  display: flex;
+  gap: 30px;
+  width: 1220px;
+  margin: 4% auto;
+  justify-content: center;
+  padding: 20px 0;
+}
+.select {
+  width: 450px;
+}
+
