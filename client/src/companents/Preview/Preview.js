@@ -43,10 +43,12 @@ function Preview() {
     const filteredList = async (req) => {
         try {
             if (req.select === 'price') req.value = parseInt(req.value)
+            if (req.select === 'all') window.location.reload();
             const objectToSerwerAuth = {
                 "action": "filter",
                 "params": { [req.select]: req.value }
             };
+
             const response = await fetch('http://api.valantis.store:40000', {
                 method: 'POST',
                 body: JSON.stringify(objectToSerwerAuth),
@@ -57,7 +59,7 @@ function Preview() {
             });
             const res = (await response.json()).result;
             console.log(res);
-
+            return res
 
         } catch (err) {
             console.log(err);

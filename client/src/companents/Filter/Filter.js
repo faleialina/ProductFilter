@@ -1,11 +1,6 @@
 import { useState } from 'react';
 import style from './style.module.css'
-import getItemsList from '../Preview/Preview'
 import { Button, FormControl, InputBase, InputLabel, MenuItem, Select, } from '@mui/material';
-
-
-
-
 
 function Filter({ getItemsList }) {
     const [selectValue, setSelectValue] = useState({
@@ -15,22 +10,20 @@ function Filter({ getItemsList }) {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        if (value === null) window.location.reload();
+
         setSelectValue({ ...selectValue, [name]: value });
         console.log(selectValue);
     };
 
     const handleSubmit = async () => {
-        getItemsList([])
-        const { result } = await getItemsList(selectValue);
-        getItemsList(result);
+        getItemsList(selectValue);
     };
 
 
     return (
         <>
             <div className={style.header}>
-               
+                <Button onClick={() => console.log(selectValue)}>Check</Button>
 
                 <FormControl className={style.formControl}>
                     <InputLabel variant="standard" htmlFor="uncontrolled-native">
@@ -42,7 +35,7 @@ function Filter({ getItemsList }) {
                         onChange={(event) => setSelectValue({ ...selectValue, select: event.target.value })}
                         clearable
                     >
-                        <MenuItem value={"all"}><em>All</em></MenuItem>
+                        <MenuItem value={'all'}><em>All</em></MenuItem>
                         <MenuItem value={'price'}>Price</MenuItem>
                         <MenuItem value={'product'}>Product</MenuItem>
                         <MenuItem value={'brand'}>Brand</MenuItem>
