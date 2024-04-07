@@ -25,7 +25,7 @@ function Preview() {
                 method: 'POST',
                 body: JSON.stringify({
                     action: "get_ids",
-                    params: { "offset": 0, "limit": 100 }
+                    params: { "offset": 0, "limit": null }
                 }),
                 headers: {
                     'Content-Type': 'application/json',
